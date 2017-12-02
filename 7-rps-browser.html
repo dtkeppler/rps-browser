@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+	<h1>Rock Paper Scissors</h1>
+	<input type="text" name="hand" id="hand">
+	<button id="submit">Shoot!</button>
+
+	<h3 id="playerScore">Player Score</h3>
+	<h3 id="computerScore">Computer Score</h3>
+	<h2 id="results"></h2>
+
+	<script type="text/javascript">
+
+		var q = document.querySelector.bind(document);
+		var qa = document.querySelectorAll.bind(document);
+
+		var hands = ["rock", "paper", "scissors"];
+		var player = {
+			// refactor: add a player name feature
+			name: "Player",
+			wins: 0
+		};
+		var computer = {
+			name: "Computer",
+			wins: 0
+		}
+
+		var playScore = document.createElement("h3");
+		q("#playerScore").append(playScore);
+		playScore.innerHTML = player.wins;
+
+		var compScore = document.createElement("h3");
+		q("#computerScore").append(compScore);
+		compScore.innerHTML = computer.wins;
+
+
+		q("#submit").addEventListener("click", function (event) {
+			// refactor: make this a method to the "player" object
+			var playerHand = q("#hand").value.toLowerCase();
+			console.log("Player hand is: " + playerHand)
+
+			// refactor: make this a method to the "computer" object
+			var computerHand = hands[Math.floor(Math.random() * (3 - 0)) + 0];
+			console.log("Computer hand is: " + computerHand)
+
+			function callHand(winner) {
+				q("#results").innerHTML = winner.name + " wins this round"
+				winner.wins += 1;
+			}
+
+			if (playerHand === "rock" && computerHand === "rock") {
+				q("#results").innerHTML = "It's a tie!"
+			} else if (playerHand === "rock" && computerHand === "paper") {
+				callHand(computer);
+			} else if (playerHand === "rock" && computerHand === "scissors") {
+				callHand(player);
+			} else if (playerHand === "paper" && computerHand === "rock") {
+				callHand(player);
+			} else if (playerHand === "paper" && computerHand === "paper") {
+				q("#results").innerHTML = "It's a tie!"
+			} else if (playerHand === "paper" && computerHand === "scissors") {
+				callHand(computer);
+			} else if (playerHand === "scissors" && computerHand === "rock") {
+				callHand(computer);
+			} else if (playerHand === "scissors" && computerHand === "paper") {
+				callHand(player);
+			} else if (playerHand === "scissors" && computerHand === "scissors") {
+				q("#results").innerHTML = "It's a tie!"
+			} else {
+				console.log("test");
+			}
+
+				playScore.innerHTML = player.wins;
+				compScore.innerHTML = computer.wins;
+
+			if (computer.wins === 5) {
+				endGame(computer);
+			} else if (player.wins === 5) {
+				endGame(player);
+			}
+
+			function endGame(winner) {
+				q("#results").innerHTML = "You win the game!";
+				playScore.remove();
+				compScore.remove();
+			}
+
+		})
+
+	</script>
+
+</body>
+</html>
